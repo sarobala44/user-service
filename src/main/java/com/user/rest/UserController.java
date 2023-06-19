@@ -45,13 +45,13 @@ public class UserController {
     })
     @PostMapping("/createUser")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<String> saveUser(@Parameter(name = "Authorization", required = true) @RequestHeader(AppConstants.AUTHORIZATION) final String authorizationHeader,
+    public ResponseEntity<String> createUser(@Parameter(name = "Authorization", required = true) @RequestHeader(AppConstants.AUTHORIZATION) final String authorizationHeader,
                                            @Parameter(name = "userId", description = "Id related to User") @RequestParam Integer userId,
                                            @Parameter(name = "name", description = "Name of the User") @RequestParam String name,
                                            @Parameter(name = "city", description = "City of the User")@RequestParam String city) {
-        log.info("UserController > saveUser > Start [userId : {}, name : {}, city : {}]", userId, name, city);
+        log.info("UserController > createUser > Start [userId : {}, name : {}, city : {}]", userId, name, city);
         userService.saveUser(userId, name, city);
-        log.info("UserController > saveUser > End [userId : {}]", userId);
+        log.info("UserController > createUser > End [userId : {}]", userId);
         return new ResponseEntity<>(AppConstants.SUCCESS, HttpStatus.CREATED);
     }
 
