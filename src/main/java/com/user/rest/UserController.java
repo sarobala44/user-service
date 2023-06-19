@@ -17,7 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestControllerWithPathMapping(requestPath = "/users")
+@RestController
 @Slf4j
 @RequiredArgsConstructor
 public class UserController {
@@ -29,7 +29,7 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "User(s) retrieved successfully", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = RegisterResponse.class))}),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))})
     })
-    @GetMapping
+    @GetMapping("/getUser")
     public ResponseEntity<?> getUserByIdOrAll(@Parameter(name = "Authorization", required = true) @RequestHeader(AppConstants.AUTHORIZATION) final String authorizationHeader,
                                               @Parameter(required = true, name = "User Id", description = "Id related to User") @RequestParam(required = false) Integer userId) {
         log.info("UserController > getUserByIdOrAll > Start [userId : {}]", userId);
@@ -42,7 +42,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Bad request", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))}),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))})
     })
-    @PostMapping
+    @PostMapping("/createUser")
     public ResponseEntity<String> saveUser(@Parameter(name = "Authorization", required = true) @RequestHeader(AppConstants.AUTHORIZATION) final String authorizationHeader,
                                            @Parameter(name = "User Id", description = "Id related to User") @RequestParam Integer userId,
                                            @Parameter(name = "User Name", description = "Name of the User") @RequestParam String name,
@@ -59,7 +59,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Bad request", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))}),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))})
     })
-    @PutMapping
+    @PutMapping("/updateUser")
     public ResponseEntity<String> updateUser(@Parameter(name = "Authorization", required = true) @RequestHeader(AppConstants.AUTHORIZATION) final String authorizationHeader,
                                              @Parameter(name = "User Id", description = "Id related to User") @RequestParam Integer userId,
                                              @Parameter(name = "User Name", description = "New Name of the User") @RequestParam(required = false) String name,
@@ -76,7 +76,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Bad request", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))}),
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))})
     })
-    @DeleteMapping
+    @DeleteMapping("/deleteUser")
     public ResponseEntity<String> deleteUser(@Parameter(name = "Authorization", required = true) @RequestHeader(AppConstants.AUTHORIZATION) final String authorizationHeader,
                                              @Parameter(name = "User Id", description = "Id related to User") @RequestParam Integer userId) {
         log.info("UserController > deleteUser > Start [userId : {}]", userId);
