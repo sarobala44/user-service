@@ -1,6 +1,6 @@
 package com.user.security.core;
 
-import com.user.security.entity.AuthUser;
+import com.user.security.entity.Client;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,21 +10,21 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class UserDetailsImpl implements UserDetails {
+public class ClientDetailsImpl implements UserDetails {
 
     private final Integer id;
 
-    private final String username;
+    private final String clientName;
 
     private final String password;
 
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(
-            Integer id, String username, String password,
+    public ClientDetailsImpl(
+            Integer id, String clientName, String password,
             Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
-        this.username = username;
+        this.clientName = clientName;
         this.password = password;
         this.authorities = authorities;
     }
@@ -45,7 +45,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return clientName;
     }
 
     @Override
@@ -68,15 +68,15 @@ public class UserDetailsImpl implements UserDetails {
         return true;
     }
 
-    public static UserDetailsImpl build(AuthUser authUser) {
-        List<GrantedAuthority> authorities = authUser.getRoles().stream()
+    public static ClientDetailsImpl build(Client client) {
+        List<GrantedAuthority> authorities = client.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
 
-        return new UserDetailsImpl(
-                authUser.getId(),
-                authUser.getUserName(),
-                authUser.getPassword(),
+        return new ClientDetailsImpl(
+                client.getId(),
+                client.getClientName(),
+                client.getPassword(),
                 authorities
         );
     }
@@ -88,8 +88,8 @@ public class UserDetailsImpl implements UserDetails {
         } else if (other == null || getClass() != other.getClass()) {
             return false;
         } else {
-            UserDetailsImpl userDetails = (UserDetailsImpl) other;
-            return Objects.equals(id, userDetails.id);
+            ClientDetailsImpl clientDetails = (ClientDetailsImpl) other;
+            return Objects.equals(id, clientDetails.id);
         }
     }
 }

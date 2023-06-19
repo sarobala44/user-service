@@ -1,7 +1,7 @@
 package com.user.security.config;
 
 import com.user.security.filter.AuthenticationTokenFilter;
-import com.user.security.service.AuthUserDetailsService;
+import com.user.security.service.AuthClientDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +27,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    private final AuthUserDetailsService authUserDetailsService;
+    private final AuthClientDetailsService authUserDetailsService;
 
     private final AuthenticationTokenFilter authenticationTokenFilter;
 

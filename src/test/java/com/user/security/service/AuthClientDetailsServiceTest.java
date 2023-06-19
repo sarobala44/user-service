@@ -1,7 +1,7 @@
 package com.user.security.service;
 
 import com.user.common.AuthenticationTestSupport;
-import com.user.security.repository.AuthUserRepository;
+import com.user.security.repository.ClientRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,29 +15,29 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
-public class AuthUserDetailsServiceTest {
+public class AuthClientDetailsServiceTest {
 
     @InjectMocks
-    AuthUserDetailsService authUserDetailsService;
+    AuthClientDetailsService authClientDetailsService;
 
     @Mock
-    AuthUserRepository authUserRepository;
+    ClientRepository clientRepository;
 
     @Test
     public void testLoadUserByUsernameSuccess() {
-        Mockito.when(authUserRepository.findByUserName("UserName")).thenReturn(
-                Optional.of(AuthenticationTestSupport.prepareAuthUser()));
-        UserDetails userDetails = authUserDetailsService.loadUserByUsername("UserName");
-        Assertions.assertEquals("UserName", userDetails.getUsername());
+        Mockito.when(clientRepository.findByClientName("ClientName")).thenReturn(
+                Optional.of(AuthenticationTestSupport.prepareClient()));
+        UserDetails userDetails = authClientDetailsService.loadUserByUsername("ClientName");
+        Assertions.assertEquals("ClientName", userDetails.getUsername());
     }
 
     @Test
     public void testLoadUserByUsernameFailure() {
-        Mockito.when(authUserRepository.findByUserName("UserName")).thenReturn(
+        Mockito.when(clientRepository.findByClientName("ClientName")).thenReturn(
                 null);
         Exception exception = Assertions.assertThrows(UsernameNotFoundException.class, () -> {
-            authUserDetailsService.loadUserByUsername("UserName");
+            authClientDetailsService.loadUserByUsername("ClientName");
         });
-        Assertions.assertEquals("No User present in Authentication entity with name : UserName", exception.getMessage());
+        Assertions.assertEquals("No User present in Authentication entity with name : ClientName", exception.getMessage());
     }
 }

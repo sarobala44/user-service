@@ -32,7 +32,7 @@ public class UserController {
     @GetMapping("/getUser")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> getUserByIdOrAll(@Parameter(name = "Authorization", required = true) @RequestHeader(AppConstants.AUTHORIZATION) final String authorizationHeader,
-                                              @Parameter(required = true, name = "User Id", description = "Id related to User") @RequestParam(required = false) Integer userId) {
+                                              @Parameter(name = "userId", description = "Id related to User") @RequestParam(required = false) Integer userId) {
         log.info("UserController > getUserByIdOrAll > Start [userId : {}]", userId);
         return ResponseEntity.ok(userService.getUserByIdOrAll(userId));
     }
@@ -46,9 +46,9 @@ public class UserController {
     @PostMapping("/createUser")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> saveUser(@Parameter(name = "Authorization", required = true) @RequestHeader(AppConstants.AUTHORIZATION) final String authorizationHeader,
-                                           @Parameter(name = "User Id", description = "Id related to User") @RequestParam Integer userId,
-                                           @Parameter(name = "User Name", description = "Name of the User") @RequestParam String name,
-                                           @Parameter(name = "User City", description = "City of the User")@RequestParam String city) {
+                                           @Parameter(name = "userId", description = "Id related to User") @RequestParam Integer userId,
+                                           @Parameter(name = "name", description = "Name of the User") @RequestParam String name,
+                                           @Parameter(name = "city", description = "City of the User")@RequestParam String city) {
         log.info("UserController > saveUser > Start [userId : {}, name : {}, city : {}]", userId, name, city);
         userService.saveUser(userId, name, city);
         log.info("UserController > saveUser > End [userId : {}]", userId);
@@ -64,9 +64,9 @@ public class UserController {
     @PutMapping("/updateUser")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> updateUser(@Parameter(name = "Authorization", required = true) @RequestHeader(AppConstants.AUTHORIZATION) final String authorizationHeader,
-                                             @Parameter(name = "User Id", description = "Id related to User") @RequestParam Integer userId,
-                                             @Parameter(name = "User Name", description = "New Name of the User") @RequestParam(required = false) String name,
-                                             @Parameter(name = "User City", description = "New City of the User") @RequestParam(required = false) String city) {
+                                             @Parameter(name = "userId", description = "Id related to User") @RequestParam Integer userId,
+                                             @Parameter(name = "name", description = "New Name of the User") @RequestParam(required = false) String name,
+                                             @Parameter(name = "city", description = "New City of the User") @RequestParam(required = false) String city) {
         log.info("UserController > updateUser > Start [userId : {}, name : {}, city : {}]", userId, name, city);
         userService.updateUserById(userId, name, city);
         log.info("UserController > updateUser > End [userId : {}]", userId);
@@ -82,7 +82,7 @@ public class UserController {
     @DeleteMapping("/deleteUser")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> deleteUser(@Parameter(name = "Authorization", required = true) @RequestHeader(AppConstants.AUTHORIZATION) final String authorizationHeader,
-                                             @Parameter(name = "User Id", description = "Id related to User") @RequestParam Integer userId) {
+                                             @Parameter(name = "userId", description = "Id related to User") @RequestParam Integer userId) {
         log.info("UserController > deleteUser > Start [userId : {}]", userId);
         userService.deleteUserById(userId);
         log.info("UserController > deleteUser > End [userId : {}]", userId);

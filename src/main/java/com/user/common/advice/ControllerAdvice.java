@@ -1,8 +1,9 @@
 package com.user.common.advice;
 
 import com.user.common.dto.ErrorResponseDTO;
-import com.user.common.exception.UserAlreadyExistsException;
+import com.user.exception.UserAlreadyExistsException;
 import com.user.exception.UserNotFoundException;
+import com.user.security.exception.ClientAlreadyExistsException;
 import com.user.security.exception.RoleNotFoundException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
@@ -30,7 +31,7 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new ErrorResponseDTO(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({UserAlreadyExistsException.class})
+    @ExceptionHandler({UserAlreadyExistsException.class, ClientAlreadyExistsException.class})
     public ResponseEntity<ErrorResponseDTO> iHandleDuplicateDataException(Exception exception, WebRequest webRequest) {
         return new ResponseEntity<>(new ErrorResponseDTO(exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
@@ -40,4 +41,3 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new ErrorResponseDTO(exception.getMessage()), HttpStatus.NOT_FOUND);
     }
 }
-

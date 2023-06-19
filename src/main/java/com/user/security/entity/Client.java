@@ -11,35 +11,35 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "AUTH_USERS")
+@Table(name = "CLIENTS")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthUser implements Serializable {
+public class Client implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, updatable = true)
-    private String userName;
+    private String clientName;
 
     @Column(nullable = false, updatable = true)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "AUTH_USER_ROLES",
-            joinColumns = @JoinColumn(name = "user_id"),
+            name = "CLIENT_ROLES",
+            joinColumns = @JoinColumn(name = "client_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
 
-    public AuthUser(String userName, String password) {
-        this.userName = userName;
+    public Client(String clientName, String password) {
+        this.clientName = clientName;
         this.password = password;
     }
 
