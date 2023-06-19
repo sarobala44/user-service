@@ -72,9 +72,9 @@ Start the application it will be exposed on port 8090 (change if required in app
 
 Note: For testing purpose below users are added automatically on application startup,
 
-Name    Password    Role
-user    user        ROLE_USER
-admin   admin       ROLE_ADMIN
+    Name    Password    Role
+    user    user        ROLE_USER
+    admin   admin       ROLE_ADMIN
 
 Use the above credentials directly to /auth/authenticate endpoint instead of creating new users through /auth/register
 
