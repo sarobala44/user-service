@@ -1,12 +1,12 @@
 package com.user.security.rest;
 
 import com.user.common.dto.ErrorResponseDTO;
+import com.user.common.metadata.RestControllerWithPathMapping;
 import com.user.security.dto.request.AuthenticationRequest;
 import com.user.security.dto.request.RegisterRequest;
 import com.user.security.dto.response.AuthenticationResponse;
 import com.user.security.dto.response.RegisterResponse;
 import com.user.security.service.AuthenticationService;
-import com.user.common.metadata.RestControllerWithPathMapping;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

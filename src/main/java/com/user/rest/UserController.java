@@ -2,7 +2,6 @@ package com.user.rest;
 
 import com.user.common.constants.AppConstants;
 import com.user.common.dto.ErrorResponseDTO;
-import com.user.common.metadata.RestControllerWithPathMapping;
 import com.user.security.dto.response.RegisterResponse;
 import com.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,6 +30,7 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))})
     })
     @GetMapping("/getUser")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> getUserByIdOrAll(@Parameter(name = "Authorization", required = true) @RequestHeader(AppConstants.AUTHORIZATION) final String authorizationHeader,
                                               @Parameter(required = true, name = "User Id", description = "Id related to User") @RequestParam(required = false) Integer userId) {
         log.info("UserController > getUserByIdOrAll > Start [userId : {}]", userId);
@@ -43,6 +44,7 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))})
     })
     @PostMapping("/createUser")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> saveUser(@Parameter(name = "Authorization", required = true) @RequestHeader(AppConstants.AUTHORIZATION) final String authorizationHeader,
                                            @Parameter(name = "User Id", description = "Id related to User") @RequestParam Integer userId,
                                            @Parameter(name = "User Name", description = "Name of the User") @RequestParam String name,
@@ -60,6 +62,7 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))})
     })
     @PutMapping("/updateUser")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> updateUser(@Parameter(name = "Authorization", required = true) @RequestHeader(AppConstants.AUTHORIZATION) final String authorizationHeader,
                                              @Parameter(name = "User Id", description = "Id related to User") @RequestParam Integer userId,
                                              @Parameter(name = "User Name", description = "New Name of the User") @RequestParam(required = false) String name,
@@ -77,6 +80,7 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))})
     })
     @DeleteMapping("/deleteUser")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> deleteUser(@Parameter(name = "Authorization", required = true) @RequestHeader(AppConstants.AUTHORIZATION) final String authorizationHeader,
                                              @Parameter(name = "User Id", description = "Id related to User") @RequestParam Integer userId) {
         log.info("UserController > deleteUser > Start [userId : {}]", userId);
