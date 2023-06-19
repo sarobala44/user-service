@@ -30,9 +30,14 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new ErrorResponseDTO(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({UserAlreadyExistsException.class, UserNotFoundException.class, RoleNotFoundException.class})
-    public ResponseEntity<ErrorResponseDTO> iHandleRunTimeException(Exception exception, WebRequest webRequest) {
+    @ExceptionHandler({UserAlreadyExistsException.class})
+    public ResponseEntity<ErrorResponseDTO> iHandleDuplicateDataException(Exception exception, WebRequest webRequest) {
         return new ResponseEntity<>(new ErrorResponseDTO(exception.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({UserNotFoundException.class, RoleNotFoundException.class})
+    public ResponseEntity<ErrorResponseDTO> iHandleNotFoundExceptions(Exception exception, WebRequest webRequest) {
+        return new ResponseEntity<>(new ErrorResponseDTO(exception.getMessage()), HttpStatus.NOT_FOUND);
     }
 }
 
