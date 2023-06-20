@@ -13,9 +13,9 @@ Authentication API:
 
 Base path - /auth
 
-    /register - Register User for authentication
+    /register - Register Client for authentication
 
-    /authenticate - Authenticate the User and generate JWT
+    /authenticate - Authenticate the Client and generate JWT
 
 User API: (All APIs for User is protected and requires valid JWT in Authorization header)
 
@@ -41,13 +41,10 @@ Console : /h2-console (enabled for testing purpose only. please update the prope
 
 Tables:
 
-AUTH_USER (To store users for authentication)
-ROLES (To store standard roles like 'ROLE_USER')
-AUTH_USER_ROLES (To maintain the relationships between AUTH_USER and ROLES)
-
-USER (To store the User details)
-
-API Documentation - /swagger-ui/index.html
+    CLIENTS (To store Clients for authentication)
+    ROLES (To store standard roles like 'ROLE_USER')
+    CLIENT_ROLES (To maintain the relationships between CLIENTS and ROLES)
+    USER (To store the User details)
 
 Run steps:
 
@@ -55,26 +52,26 @@ Import the project to IDE and resolve all the required dependencies
 
 Start the application it will be exposed on port 8090 (change if required in application.properties)
 
-1. Call the /auth/register endpoint with sample payload like below to register the user for authentication,  
+1. Call the /auth/register endpoint with sample payload like below to register the client for authentication,  
 
-{
-"userName":"test_user",
-"password":"user",
-"roles":["ROLE_USER"]
-}
+    {
+    "clientName":"test_client",
+    "password":"password",
+    "roles":["ROLE_USER"]
+    }
 
 2. Call the /auth/authenticate endpoint with sample payload like below to get the JWT,
 
-{
-"userName":"test_user",
-"password":"user"
-}
+    {
+    "cName":"test_client",
+    "password":"password"
+    }
 
-Note: For testing purpose below users are added automatically on application startup,
+Note: For testing purpose below Clients are added automatically on application startup,
 
-    Name    Password    Role
-    user    user        ROLE_USER
-    admin   admin       ROLE_ADMIN
+    Name           Password         Role
+    user_client    password         ROLE_USER
+    admin_client   password         ROLE_ADMIN
 
 Use the above credentials directly to /auth/authenticate endpoint instead of creating new users through /auth/register
 
@@ -84,10 +81,11 @@ Logs:
 
 Stored in /logs/user-service.log
 
+API Documentation - /swagger-ui/index.html
+
+Use Authorize button to enter the JWT for authentication. OpenAPI don't support to specify the Authorization headers through parameters.
+
 JWT properties: (Change if required)
 
 app.jwtSecret=exampleSecretKey
 app.jwtExpiry=1800000
-
-
-
